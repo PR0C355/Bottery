@@ -1,0 +1,30 @@
+Commands:
+**!ban <mention>** - Bans the mentioned user
+**!beemovie** - Sends the entirety of the bee movie script from beginning to end (Only available to authorized users)
+**!birthtime** - Sends the date and time your discord account was made
+**!cbt** - If you know, you know. (Only available to authorized users)
+**!cbt** - Sends the entire wikipedia CBT copypasta
+**!changepresencelistening <Acitivity>** - Changes the bot's presence to listening to the set activity
+**!changepresenceplaying <Acitivity>** - Changes the bot's presence to playing the set activity
+**!changepresencestreaming <Acitivity>** - Changes the bot's presence to streaming the set activity
+**!changepresencewatching <Acitivity>** - Changes the bot's presence to watching the set activity
+**!crewmateverse** - Sends a verse from the bible I deemed related to being a crewmate
+**!help** - Sends the content of the help sheet
+**!impostorverse** - Sends a verse from the bible I deemed related to being an impostor
+**!invite** - Invite the bot to your Discord server
+**!kick <mention>** - Kicks the mentioned user
+**!members** - Sends an alphabetical list of all members of the discord server
+**!missileguidance** - Sends the entire missile guidance copypasta
+**!morpheus** - Sends the lyrics for the morpheus song sung by Hannibal Buress on The Eric Andre Show
+**!morpheusvideo** - Sends a link to a video of Hannibal Buress singing his morpheus song, as well as the lyrics
+**!opuscheck** - Little dev function relating to voice
+**!pfp** - Check your user profile picture
+**!reactionimage (!ri, You can also just say: I need a reaction image)** - Sends a random reaction image that may or may not match your current secnario (Currently contains 35+ images)
+**!rngvote** - Mentions a random member of the server to vote out
+**!speak <message> (Only available to authorized users)** - Deletes original command and sends the contents of the message that contained this command (Minus the command itself)
+**!sus** - Gives a random person to be suspicious of, aswell as a reason
+**!telltalegame** - Delivers a message akin to the popus often found in telltale games
+**!time** - Sends a message of the current date and time
+**!vcjoin** - Adds the bot to your current connected voice channel (No full voice funcitonality yet)
+**!vcleave** -  Removes the bot from your current connected voice channel (No full voice funcitonality yet)
+**!wlcounter** - Counts, and sends, the number of wishlist mudae characters obtained by weeb shit members

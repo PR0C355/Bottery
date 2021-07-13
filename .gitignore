@@ -1,0 +1,6 @@
+storage.txt
+storage-revamp.txt
+*.env
+*.bat
+Procfile
+Hermes.py
