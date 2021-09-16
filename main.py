@@ -3,7 +3,6 @@ import random
 import os
 import discord
 from datetime import datetime
-import schedule
 from threading import Timer
 import pygsheets
 import pandas as pd
@@ -19,39 +18,11 @@ from dotenv import load_dotenv
 import keep_alive
 import re
 
-path = "musica"
-TimeNow = time.time()
-
-
-
-
-def oldmusica_deletion():
-  for filename in os.listdir(path):
-    filestamp = os.stat(os.path.join(path, filename)).st_mtime
-    filecompare = TimeNow - 1
-    #7 * 86400
-    if  filestamp < filecompare:
-     print(filename + "to be deleted")
-
-
-
-def oldmusica_deletion():
-  print("deez")
-  for filename in os.listdir(path):
-    filestamp = os.stat(os.path.join(path, filename)).st_mtime
-    filecompare = TimeNow - 1
-    #7 * 86400
-    if  filestamp < filecompare:
-     print(filename + "to be deleted")
-
-schedule.every().day.at("13:25").do(oldmusica_deletion)
-
-
-
-
-
 
 load_dotenv('.env')
+TimeNow = time.time()
+
+#Authorize
 gc = pygsheets.authorize(service_file='goog-cred.json')
 #ydl = youtube_dl.YoutubeDL({'outtmpl': '%(id)s.%(ext)s'})
 
@@ -186,12 +157,6 @@ async def on_member_join(member):
         await member.add_roles(StandardRole_WeebShit)
         await member.add_roles(StandardRole_WeebShitx2)
 
-
-
-@client.event
-async def on_member_update(before,after):
-  schedule.run_pending()
-  time.sleep(1)
 
 
 
@@ -1120,7 +1085,7 @@ async def on_message(message):
             await user.kick(reason='No Fortnite.')
             await message.channel.send('https://cdn.discordapp.com/attachments/788121984327745546/788122182789365780/image1.jpg')
 
-
+ 
     if 'dibs' in message.content:
         if message.author.id != 196762513172463617:
             await user.kick(reason="Logan Told Me To")
@@ -1232,7 +1197,6 @@ async def on_message(message):
     if '!connect' in message.content:
       if message.author.guild_permissions.connect or message.author.id == 196762513172463617:
         vc = await message.author.voice.channel.connect(reconnect=True)
-        await vc.stop()
         await message.add_reaction(confirmedEmoji)
 
 
@@ -1370,46 +1334,15 @@ async def on_message(message):
               await ytconversionmsg.edit(content="**Done!**", delete_after=5)
               await ytsRequest.reply(embed=yts_embed)
               time.sleep(1)
-              if vc.is_paused:
-                nextSong.append(ytURLFileName)
-              else:
-                nextSong.append(ytURLFileName)
-              await message.add_reaction(confirmedEmoji)
-            else:
-              ytsRequest = message
-              ytCommand = message.content
-              ytSearch = ytCommand.replace('!music ', '')
-              ytSearch = ytSearch.replace(" ", "+")
-              ytSearchURL = urllib.request.urlopen("https://www.youtube.com/results?search_query=" + ytSearch)
-              video_ids = re.findall(r"watch\?v=(\S{11})", ytSearchURL.read().decode())
-              ytURL = ("https://www.youtube.com/watch?v=" + video_ids[0])
-              ytURLFileName = ytURL[-11:]
-              print (ytURLFileName)
-              ytURLFileName = 'musica/' + ytURLFileName + '.mkv'
-              ytconversionmsg = await message.channel.send('**Downloading YouTube Video...**')
-              with ydl:
-                ydl.download([ytURL])
-                info_dict = ydl.extract_info(ytURL, download=False)
-                video_url = info_dict.get("url", None)
-                video_id = info_dict.get("id", None)
-                video_thumbnail = info_dict.get('thumbnail', None)
-                video_title = info_dict.get('title', None)
-                video_title = f"[{video_title}]({ytURL})"
-              yts_embed = discord.Embed(title="**Now Playing**", color=000000, description=video_title)
-              yts_embed.set_footer(text=f"Requested by {message.author}", icon_url=str(message.author.avatar_url))
-              yts_embed.timestamp = datetime.now()
-              yts_embed.set_image(url=video_thumbnail)
-              await ytconversionmsg.edit(content="**Done!**", delete_after=5)
-              await ytsRequest.reply(embed=yts_embed)
-              time.sleep(1)
-              nextSongIndex = 0
               vc.pause()
-              vc.play(discord.FFmpegPCMAudio(ytURLFileName), after=vc.play(after=discord.FFmpegPCMAudio(nextSong[nextSongIndex])))
+              vc.play(discord.FFmpegPCMAudio(ytURLFileName), after=lambda e: print('done', e))
               vc.is_playing()
               await message.add_reaction(confirmedEmoji)
+            
             print(video_url)
             print(video_id)
             print(video_title)
+
         
         
 
@@ -1596,9 +1529,6 @@ async def on_message(message):
     if ' cat  ' in message.content.lower():
         await message.channel.send('https://media.discordapp.net/attachments/775941210119733269/777561607839547402/image0.jpg?width=400&height=219')
 
-
-
-
     if message.content.lower().startswith('$m'):
         if message.content.lower() == '$m':
             await message.delete()
@@ -1632,14 +1562,10 @@ async def on_message(message):
     if 'Oatmeal raisin' in message.content:
         await message.channel.send('***dammit***')
 
-
-
     if message.content.startswith('!time'):
         timenow = datetime.datetime.now()
         current_time = timenow.strftime("%H:%M:%S")
         await message.channel.send("Current Time - " + current_time)
-
-
 
     if message.channel.id == 775945092489805834:
         if message.author.id == 251481402090979329:
@@ -1691,9 +1617,6 @@ async def on_message(message):
                       await message.channel.send('Emmy - ' + str(emmywishcounter))
                       await message.channel.send('Sarah - ' + str(sarahwishcounter))
                       await message.channel.send('Will - ' + str(willwishcounter))
-
-
-
 
     if message.content.startswith('!encrypt'):
 
@@ -1807,5 +1730,4 @@ async def on_ready():
 
 
 keep_alive.keep_alive()
-
 client.run(str(os.getenv('BOT_TOKEN')))
