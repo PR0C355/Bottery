@@ -154,6 +154,14 @@ async def on_member_join(member):
         await member.add_roles(StandardRole_WeebShit)
         await member.add_roles(StandardRole_WeebShitx2)
 
+@client.event
+async def on_voice_state_update(member, before, after):
+    if after.channel.id == 1234567890:
+        if member.guild_permissions.connect or message.author.id == 196762513172463617:
+            vc = await channel.connect(reconnect=True)
+            vc.pause()
+            vc.play(discord.FFmpegPCMAudio("ram_ranch.mp3"))
+            
 
 
 
