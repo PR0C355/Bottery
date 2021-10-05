@@ -81,9 +81,6 @@ async def on_guild_join(guild):
 
 @client.event
 async def on_member_remove(member):
-    leaveEvents = ["was not the imposter.", "was the imposter.",
-                   "failed to have the exaggerated swagger of a black teen.",
-                   "is fucking dead.", "became a demon.", "drank the demon's blood.", "blew the fuck up.", "lost penis privilege", "got kicked. Imagine getting kicked. What an idiot."]
     leaveEvents = [f"{member.mention} fucking died.", f"Hey {member.mention}, welcome to hell!", f"Oh dear, {member.mention} left the server. Were they important?", f"Looks like {member.mention} was not the imposter.", f"I guess {member.mention} was the imposter.",
                    f"It appears {member.mention} failed to have the exaggerated swagger of a black teen.",
                    f"{member.mention} fucking died.", f"{member.mention} spontaneously combusted", f"{member.mention} lost penis privilege", f"I'm sure {member.mention} will rest in peace, now that they don't have to get pinged by you idiots."]
@@ -544,6 +541,22 @@ async def on_message(message):
           for i in range(memberListLength):
               await message.channel.send(sortedExistingMembers[i])
 
+    if message.content.startswith('!dadjoke'):
+      with open('dad_jokes.txt', 'r') as djfile:
+        dadJokes = [line.strip() for line in djfile]
+      with message.channel.typing():
+            chosenDadJoke = random.choice(dadJokes)
+            dadjokenumber = dadJokes.index(chosenDadJoke) + 1
+            user_pfp = str(message.author.avatar_url)
+            dadjoke_embed = discord.Embed(color=000000)
+            dadjoke_embed.add_field(name=("**Dad Joke #" + str(dadjokenumber) + "**"), value=chosenDadJoke, inline=False)
+            dadjoke_embed.set_author(name=client.user.name, icon_url=(client.user.avatar_url))
+            dadjoke_embed.set_footer(text=f"Dad Joke requested by {message.author}")
+            dadjoke_embed.timestamp = datetime.now()
+            await message.channel.send(embed=dadjoke_embed)
+      
+
+
     if '**LittleHanger** and' in message.content:
         await message.channel.send("Hey Logan? Fuck you. That is all. Maybe you did something, maybe you didn't, but this is a preemptive measure.")
         await message.channel.send('-Tumi')
@@ -754,9 +767,18 @@ async def on_message(message):
 
     if message.content.lower().startswith('!reactionimage'):
         await message.delete()
-        chosenReactionImage = random.choice(reactionImages)
-        await message.channel.send(f"{message.author.mention}, here's your reaction image:")
-        await message.channel.send(chosenReactionImage)
+        with message.channel.typing():
+            chosenReactionImage = random.choice(reactionImages)
+            user_pfp = str(message.author.avatar_url)
+            ri_embed = discord.Embed(color=000000)
+            ri_embed.set_image(url=chosenReactionImage)
+            ri_embed.set_author(name=client.user.name, icon_url=(client.user.avatar_url))
+            ri_embed.set_footer(text=f"Reaction image requested by {message.author}")
+            await message.channel.send(embed=ri_embed)
+            if 'Direct Message' in channelinuse:
+              user = client.get_user(196762513172463617)
+              await user.send(f'**{authuser}**: (Sent This Embed)')
+              await user.send(embed=ri_embed)
 
     if message.content.lower().startswith('!ri'):
         await message.delete()
