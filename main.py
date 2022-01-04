@@ -9,10 +9,6 @@ import pandas as pd
 import urllib.request
 from gtts import gTTS
 import youtube_dl
-from discord import client
-from discord import voice_client
-from discord import embeds
-from discord import guild
 import ssl
 from dotenv import load_dotenv
 import keep_alive
@@ -23,7 +19,7 @@ load_dotenv('.env')
 TimeNow = time.time()
 
 #Authorize
-gc = pygsheets.authorize(service_file='goog-cred.json')
+#gc = pygsheets.authorize(service_file='goog-cred.json')
 #ydl = youtube_dl.YoutubeDL({'outtmpl': '%(id)s.%(ext)s'})
 
 ydl = youtube_dl.YoutubeDL({
@@ -156,11 +152,11 @@ async def on_member_join(member):
 
 @client.event
 async def on_voice_state_update(member, before, after):
-    if after.channel.id == 1234567890:
-        if member.guild_permissions.connect or message.author.id == 196762513172463617:
-            vc = await channel.connect(reconnect=True)
+    if after.channel.id == 838876158208245794:
+        if member.guild_permissions.connect or member.id == 196762513172463617:
+            vc = await after.channel.connect(reconnect=True)
             vc.pause()
-            vc.play(discord.FFmpegPCMAudio("ram_ranch.mp3"))
+            vc.play(discord.FFmpegPCMAudio("ram_ranch.mkv"))
             
 
 
@@ -394,7 +390,12 @@ async def on_message(message):
         await message.channel.send("***HAPPY BIRTHDAY TO YOUUUUUUUUUUUUUUU***")
         await message.channel.send("https://tenor.com/view/confetti-celebrate-colorful-celebration-gif-15816997")
 
-
+    if "i\'m" in message.content:
+      indexLocationIM = message.content.lower().find("i\'m") + 3
+      indexLocationEndIM = message.content.find(" ", indexLocationIM + 1, -1)
+      print (indexLocationIM)
+      print (indexLocationEndIM)
+      print (message.content[indexLocationIM+1:indexLocationEndIM])
 
     if 'supercalifragilisticexpialidDMcius' in message.content:
         await message.channel.send("Hi! I don't really have much DM functionality right now, but my Creator is working on it!")
@@ -1239,7 +1240,7 @@ async def on_message(message):
           if(x.guild == message.guild):
             await x.disconnect()
             await message.add_reaction(confirmedEmoji)
-
+    """
     if message.content.startswith('!vcyt'):
       if message.author.guild_permissions.move_members or message.author.id == 196762513172463617:
         vc = message.guild.voice_client
@@ -1372,9 +1373,9 @@ async def on_message(message):
             print(video_url)
             print(video_id)
             print(video_title)
+    """
+        
 
-        
-        
 
     if message.content.lower().startswith('!vc-tts'):
       if message.author.guild_permissions.move_members or message.author.id == 196762513172463617:
@@ -1466,6 +1467,7 @@ async def on_message(message):
             vc.is_playing()
             await message.add_reaction(confirmedEmoji)
 
+    """
     if message.content.startswith('!clearmusic'):
       if message.author.id == 196762513172463617:
         print("deez")
@@ -1486,7 +1488,7 @@ async def on_message(message):
               print(f"The file: {filename} does not exist")
         await message.channel.send(f"Music Clear: {filesdeleted} File(s) Deleted")
         await message.add_reaction(confirmedEmoji)
-
+    """
 
     
     if message.content.startswith('!pause'):
@@ -1709,7 +1711,7 @@ async def on_message(message):
     if message.content.startswith('!decrypt'):
         print('active')
 
-    
+    """
     messagedict = {
       message_server: [' '],
       authuser: [' '],
@@ -1748,6 +1750,7 @@ async def on_message(message):
     dbValue = dbValue + 1
     dbTextFile.write(str(dbValue))
     dbTextFile.close()
+    """
 
 
 @client.event
@@ -1759,5 +1762,5 @@ async def on_ready():
     print('----------------------------')
 
 
-keep_alive.keep_alive()
+#keep_alive.keep_alive()
 client.run(str(os.getenv('BOT_TOKEN')))
